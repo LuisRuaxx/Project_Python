@@ -1,0 +1,533 @@
+:root {
+  /* Paleta basada en el logo de Horizon Haven */
+  --azul-marino: #0B1F3A;
+  --azul-marino-claro: #15355E;
+  --dorado: #C9A227;
+  --dorado-claro: #E8C766;
+  --blanco-hueso: #FAF9F6;
+  --gris-claro: #E8E6E1;
+  --gris-medio: #9CA3AF;
+  --texto-principal: #1A1A1A;
+  --texto-secundario: #5A5A5A;
+
+  --exito-fondo: #E6F4EA;
+  --exito-texto: #1E7C34;
+  --exito-borde: #2E7D32;
+
+  --error-fondo: #FDECEC;
+  --error-texto: #B3261E;
+  --error-borde: #C62828;
+
+  --info-fondo: #E8F0FE;
+  --info-texto: #1A4FAB;
+  --info-borde: #15355E;
+
+  --sombra: 0 2px 8px rgba(11, 31, 58, 0.08);
+  --sombra-fuerte: 0 4px 16px rgba(11, 31, 58, 0.15);
+  --radio: 10px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--blanco-hueso);
+  color: var(--texto-principal);
+}
+
+h1, h2, h3, h4 {
+  color: var(--azul-marino);
+  font-family: "Georgia", "Times New Roman", serif;
+  letter-spacing: 0.5px;
+}
+
+a {
+  color: var(--azul-marino);
+  text-decoration: none;
+}
+
+/* ========================= */
+/* LAYOUT GENERAL             */
+/* ========================= */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.contenido-principal {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ========================= */
+/* BARRA LATERAL (DASHBOARD)  */
+/* ========================= */
+.sidebar {
+  width: 240px;
+  background-color: var(--azul-marino);
+  color: var(--blanco-hueso);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sidebar-logo h2 {
+  color: var(--dorado);
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-logo p {
+  color: var(--gris-claro);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.sidebar-nav a, .sidebar-nav button {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radio);
+  color: var(--blanco-hueso);
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sidebar-nav a:hover, .sidebar-nav button:hover {
+  background-color: var(--azul-marino-claro);
+}
+
+.sidebar-nav a.activo {
+  background-color: var(--dorado);
+  color: var(--azul-marino);
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  border-top: 1px solid var(--azul-marino-claro);
+  padding-top: 1rem;
+}
+
+.sidebar-usuario {
+  font-size: 0.85rem;
+  color: var(--gris-claro);
+  margin-bottom: 0.75rem;
+}
+
+.btn-logout {
+  width: 100%;
+  background-color: var(--error-borde);
+  color: white;
+}
+
+.btn-logout:hover {
+  background-color: #a31f1f;
+}
+
+/* ========================= */
+/* PANTALLAS DE AUTENTICACIÓN */
+/* ========================= */
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--azul-marino) 0%, var(--azul-marino-claro) 100%);
+  padding: 1rem;
+}
+
+.auth-card {
+  background-color: var(--blanco-hueso);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-fuerte);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-card .auth-titulo {
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.auth-subtitulo {
+  text-align: center;
+  color: var(--dorado);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+}
+
+.auth-link a {
+  color: var(--dorado);
+  font-weight: 600;
+}
+
+/* ========================= */
+/* FORMULARIOS                */
+/* ========================= */
+.form-grupo {
+  margin-bottom: 1.1rem;
+}
+
+.form-grupo label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--azul-marino);
+  margin-bottom: 0.35rem;
+}
+
+.form-grupo input,
+.form-grupo select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--gris-claro);
+  border-radius: var(--radio);
+  font-size: 0.95rem;
+  background-color: white;
+  color: var(--texto-principal);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-grupo input:focus,
+.form-grupo select:focus {
+  outline: none;
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
+}
+
+.form-fila {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-fila .form-grupo {
+  flex: 1;
+}
+
+/* ========================= */
+/* BOTONES                    */
+/* ========================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: var(--radio);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primario {
+  background-color: var(--azul-marino);
+  color: var(--blanco-hueso);
+  width: 100%;
+}
+
+.btn-primario:hover {
+  background-color: var(--azul-marino-claro);
+}
+
+.btn-dorado {
+  background-color: var(--dorado);
+  color: var(--azul-marino);
+}
+
+.btn-dorado:hover {
+  background-color: var(--dorado-claro);
+}
+
+.btn-secundario {
+  background-color: var(--gris-claro);
+  color: var(--azul-marino);
+}
+
+.btn-secundario:hover {
+  background-color: #d8d5cd;
+}
+
+.btn-peligro {
+  background-color: var(--error-borde);
+  color: white;
+}
+
+.btn-peligro:hover {
+  background-color: #a31f1f;
+}
+
+.btn-pequeno {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================= */
+/* ALERTAS / MENSAJES         */
+/* ========================= */
+.alerta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radio);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid transparent;
+}
+
+.alerta-exito {
+  background-color: var(--exito-fondo);
+  color: var(--exito-texto);
+  border-left-color: var(--exito-borde);
+}
+
+.alerta-error {
+  background-color: var(--error-fondo);
+  color: var(--error-texto);
+  border-left-color: var(--error-borde);
+}
+
+.alerta-info {
+  background-color: var(--info-fondo);
+  color: var(--info-texto);
+  border-left-color: var(--info-borde);
+}
+
+.alerta-icono {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.alerta-texto {
+  flex: 1;
+}
+
+.alerta-cerrar {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: inherit;
+  line-height: 1;
+}
+
+/* ========================= */
+/* TARJETAS / PANELES         */
+/* ========================= */
+.panel {
+  background-color: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ========================= */
+/* DASHBOARD - TARJETAS DE RESUMEN */
+/* ========================= */
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.tarjeta-resumen {
+  background-color: white;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 1.5rem;
+  border-left: 5px solid var(--dorado);
+}
+
+.tarjeta-resumen h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--texto-secundario);
+  margin-bottom: 0.5rem;
+}
+
+.tarjeta-resumen .valor {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--azul-marino);
+}
+
+/* ========================= */
+/* TABLAS                     */
+/* ========================= */
+.tabla-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th {
+  background-color: var(--azul-marino);
+  color: var(--blanco-hueso);
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+table th:first-child {
+  border-radius: var(--radio) 0 0 0;
+}
+
+table th:last-child {
+  border-radius: 0 var(--radio) 0 0;
+}
+
+table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--gris-claro);
+  font-size: 0.9rem;
+}
+
+table tbody tr:hover {
+  background-color: var(--blanco-hueso);
+}
+
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.acciones-celda {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-excelente { background-color: var(--exito-fondo); color: var(--exito-texto); }
+.badge-buena { background-color: var(--info-fondo); color: var(--info-texto); }
+.badge-media { background-color: #FFF4E0; color: #B8860B; }
+.badge-mala { background-color: var(--error-fondo); color: var(--error-texto); }
+.badge-deteriorada { background-color: #f0e0e0; color: #7a1f1f; }
+
+.texto-vacio {
+  text-align: center;
+  padding: 2rem;
+  color: var(--texto-secundario);
+}
+
+/* ========================= */
+/* MODAL                      */
+/* ========================= */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(11, 31, 58, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-contenido {
+  background-color: white;
+  border-radius: var(--radio);
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--sombra-fuerte);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.modal-cerrar {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--texto-secundario);
+}
+
+.form-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+  }
+  .form-fila {
+    flex-direction: column;
+    gap: 0;
+  }
+}
