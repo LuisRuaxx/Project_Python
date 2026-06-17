@@ -19,6 +19,7 @@ const ESTADOS_VIVIENDA = ["Excelente", "Buena", "Media", "Mala", "Deteriorada"];
 
 const FORM_VACIO = { tipo_vivienda: "Apartamento", precio: "", tamano: "", estado: "Excelente" };
 
+
 export default function Viviendas() {
     const [viviendas, setViviendas] = useState([]);
     const [cargando, setCargando] = useState(true);
