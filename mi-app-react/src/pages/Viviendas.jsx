@@ -1,7 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import api from "../services/api";
 import Alerta from "../components/Alerta";
 import Modal from "../components/Modal";
+import Vivienda from "../assets/Vivienda.png";
+import Casa from "../assets/Casa.png";
+import Departamento from "../assets/Departamento.png";
+import Loft from "../assets/Loft.png";
+import Finca from "../assets/Finca.png";
+import Penthouse from "../assets/Penthouse.png";
+import Duplex from "../assets/Duplex.png";
+import Estudio from "../assets/Estudio.png";
+
+const IMAGENES_CARRUSEL = [Vivienda, Casa, Departamento, Loft, Finca, Penthouse, Duplex, Estudio];
+const TIEMPO_AUTOPLAY = 5000;
 
 const TIPOS_VIVIENDA = ["Apartamento", "Casa", "Loft", "Penthouse", "Duplex", "Finca", "Estudio"];
 const ESTADOS_VIVIENDA = ["Excelente", "Buena", "Media", "Mala", "Deteriorada"];
@@ -13,12 +24,15 @@ export default function Viviendas() {
     const [cargando, setCargando] = useState(true);
     const [alerta, setAlerta] = useState({ tipo: "", mensaje: "" });
 
+    const [imagenActualIndex, setImagenActualIndex] = useState(0);
+    const [autoplayHabilitado, setAutoplayHabilitado] = useState(true);
+    const intervalRef = useRef(null);
+
     const [modalAbierto, setModalAbierto] = useState(false);
     const [modoEdicion, setModoEdicion] = useState(false);
     const [idEditando, setIdEditando] = useState(null);
     const [formulario, setFormulario] = useState(FORM_VACIO);
     const [enviando, setEnviando] = useState(false);
-
     const [confirmarEliminar, setConfirmarEliminar] = useState(null);
 
     const cargarViviendas = async () => {
@@ -39,6 +53,30 @@ export default function Viviendas() {
     useEffect(() => {
         cargarViviendas();
     }, []);
+
+    const siguienteImagen = useCallback(() => {
+        setImagenActualIndex((prevIndex) => (prevIndex + 1) % IMAGENES_CARRUSEL.length);
+    }, []);
+
+    const anteriorImagen = () => {
+        setImagenActualIndex((prevIndex) => (prevIndex - 1 + IMAGENES_CARRUSEL.length) % IMAGENES_CARRUSEL.length);
+    };
+-
+    useEffect(() => {
+        if (autoplayHabilitado) {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            intervalRef.current = setInterval(siguienteImagen, TIEMPO_AUTOPLAY);
+        } else {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        }
+
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        };
+    }, [siguienteImagen, autoplayHabilitado]);
+
+    const detenerAutoplay = () => setAutoplayHabilitado(false);
+    const reanudarAutoplay = () => setAutoplayHabilitado(true);
 
     const abrirModalCrear = () => {
         setFormulario(FORM_VACIO);
@@ -131,6 +169,14 @@ export default function Viviendas() {
         return `badge ${mapa[estado] || ""}`;
     };
 
+    const estilosCarrusel = {
+        contenedor: { position: "relative", width: "100%", overflow: "hidden", borderRadius: "12px", marginBottom: "2rem", cursor: "pointer" },
+        imagen: { width: "100%", height: "400px", objectFit: "cover", transition: "transform 0.5s ease" },
+        boton: { position: "absolute", top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", color: "white", border: "none", padding: "10px 15px", borderRadius: "50%", cursor: "pointer", fontSize: "1.2rem", zIndex: 10, transition: "background 0.3s" },
+        botonAnterior: { left: "10px" },
+        botonSiguiente: { right: "10px" }
+    };
+
     return (
         <div>
             <h1>Viviendas</h1>
@@ -140,6 +186,38 @@ export default function Viviendas() {
 
             <Alerta tipo={alerta.tipo} mensaje={alerta.mensaje} onCerrar={() => setAlerta({ tipo: "", mensaje: "" })} />
 
+            {/* --- COMPONENTE INTERACTIVO DEL CARRUSEL --- */}
+            <div
+                style={estilosCarrusel.contenedor}
+                onMouseEnter={detenerAutoplay}
+                onMouseLeave={reanudarAutoplay}
+            >
+                <button
+                    style={{...estilosCarrusel.boton, ...estilosCarrusel.botonAnterior}}
+                    onClick={anteriorImagen}
+                    onMouseEnter={(e) => e.target.style.background = 'rgba(0,0,0,0.8)'}
+                    onMouseLeave={(e) => e.target.style.background = 'rgba(0,0,0,0.5)'}
+                >
+                    &#10094;
+                </button>
+
+                <img
+                    src={IMAGENES_CARRUSEL[imagenActualIndex]}
+                    alt={`Tipo de vivienda ${imagenActualIndex + 1}`}
+                    style={estilosCarrusel.imagen}
+                />
+
+                <button
+                    style={{...estilosCarrusel.boton, ...estilosCarrusel.botonSiguiente}}
+                    onClick={siguienteImagen}
+                    onMouseEnter={(e) => e.target.style.background = 'rgba(0,0,0,0.8)'}
+                    onMouseLeave={(e) => e.target.style.background = 'rgba(0,0,0,0.5)'}
+                >
+                    &#10095;
+                </button>
+            </div>
+
+            {/* --- PANEL DE TABLA DE VIVIENDAS --- */}
             <div className="panel">
                 <div className="panel-header">
                     <h2>Listado de viviendas</h2>
@@ -191,6 +269,7 @@ export default function Viviendas() {
                 )}
             </div>
 
+            {/* --- MODAL CREAR / EDITAR --- */}
             {modalAbierto && (
                 <Modal titulo={modoEdicion ? "Editar vivienda" : "Nueva vivienda"} onCerrar={cerrarModal}>
                     <form onSubmit={manejarSubmit}>
@@ -255,6 +334,7 @@ export default function Viviendas() {
                 </Modal>
             )}
 
+            {/* --- MODAL CONFIRMAR ELIMINACIÓN --- */}
             {confirmarEliminar !== null && (
                 <Modal titulo="Confirmar eliminación" onCerrar={() => setConfirmarEliminar(null)}>
                     <p style={{ marginBottom: "1.5rem" }}>

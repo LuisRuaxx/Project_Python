@@ -1,0 +1,25 @@
+{
+  "name": "project_python",
+  "version": "1.0.0",
+  "description": "Proyecto de Sistemas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisRuaxx/Project_Python.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LuisRuaxx/Project_Python/issues"
+  },
+  "homepage": "https://github.com/LuisRuaxx/Project_Python#readme",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "vite": "^8.0.16"
+  }
+}

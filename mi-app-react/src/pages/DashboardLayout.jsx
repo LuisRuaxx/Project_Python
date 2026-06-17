@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import logo from "../assets/logo.png";
 
 export default function DashboardLayout() {
     const { usuario, logout } = useAuth();
@@ -14,22 +15,23 @@ export default function DashboardLayout() {
         <div className="app-layout">
             <aside className="sidebar">
                 <div className="sidebar-logo">
+                    <img src={logo} alt="Logo Horizon Haven" />
                     <h2>Horizon Haven</h2>
                     <p>BUY · SELL · RENT</p>
                 </div>
 
                 <nav className="sidebar-nav">
                     <NavLink to="/dashboard" end className={({ isActive }) => isActive ? "activo" : ""}>
-                        📊 Resumen
+                         Resumen
                     </NavLink>
                     <NavLink to="/dashboard/viviendas" className={({ isActive }) => isActive ? "activo" : ""}>
-                        🏠 Viviendas
+                         Viviendas
                     </NavLink>
                     <NavLink to="/dashboard/citas" className={({ isActive }) => isActive ? "activo" : ""}>
-                        📅 Citas
+                         Citas
                     </NavLink>
                     <NavLink to="/dashboard/usuarios" className={({ isActive }) => isActive ? "activo" : ""}>
-                        👤 Usuarios
+                         Usuarios
                     </NavLink>
                 </nav>
 
